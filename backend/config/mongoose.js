@@ -8,7 +8,8 @@ mongoose
     console.log(
       `DB connection successful! with server : ${data.connection.host}`
     )
-  ).catch((err) => console.log(err));
+  )
+  .catch((err) => console.log(err));
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
