@@ -16,6 +16,8 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 // get all products
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
+
+  // here we are using lean() method to get the product in json format and it's faster than normal find operation
   const product = await Product.find().lean();
   res.status(200).json({
     success: true,
@@ -47,6 +49,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
     return next(new ErrorHandler("Product not found", 404));
   }
 
+  // here we are using new:true to get the updated product and runValidators to validate the updated data
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,

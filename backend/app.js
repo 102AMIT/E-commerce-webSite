@@ -7,6 +7,7 @@ const errorMiddleware = require('./middleware/error');
 const catchAsyncErrors = require('./middleware/catchAsyncErrors');
 
 app.use(express.json());
+
 // Routes for products
 const productRoute = require('./routes/productRoute');
 
@@ -18,8 +19,9 @@ app.get('/ping', (req, res) => {
 
 // Middleware to handle errors
 app.use(errorMiddleware)
-app.use(catchAsyncErrors);
 
 // Middleware to handle async errors
+app.use(catchAsyncErrors);
+
 
 module.exports = app;
