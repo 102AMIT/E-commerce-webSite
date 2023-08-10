@@ -9,3 +9,8 @@
 <!-- Uncaught error handling -->
 
 <!-- Wrong Mongoose ObjectId error (When we are passing Wrong Id in Url or params)  -->
+
+
+<!-- In utils folder - > apiFeatures, I'm adding search, filter and pagination .Using search we are passing query String and by this query string we can find out all the products by matching characters and same with filter . -->
+
+

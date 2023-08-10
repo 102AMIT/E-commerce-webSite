@@ -1,6 +1,7 @@
 const Product = require("../models/ProductModel");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const ApiFeatures = require("../utils/apiFeatures");
 
 // create product--Admin
 
@@ -16,12 +17,22 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 // get all products
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
+  // for pagination
+  const resultPerPage = 5;
 
+  const productCount = await Product.countDocuments();
+
+  // finding using query string it's help us to find the product by matching the character in the product name
+  const apiFeature = new ApiFeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(resultPerPage);
   // here we are using lean() method to get the product in json format and it's faster than normal find operation
-  const product = await Product.find().lean();
+  const product = await apiFeature.query;
   res.status(200).json({
     success: true,
     product,
+    productCount,
   });
 });
 
