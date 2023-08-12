@@ -11,12 +11,11 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-
-app.use('/', require('./routes/index'));
-
 app.get('/ping', (req, res) => {
     return res.send('Pong');
 });
+
+app.use('/', require('./routes/index'));
 
 // Middleware to handle errors
 app.use(errorMiddleware)
