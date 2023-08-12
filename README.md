@@ -23,5 +23,9 @@
 
 <!-- So here we are Using Bcryptjs for hashing the password , JWt for token creation and refresh token also for security , using validator package for validating the email  -->
 
+<!-- Adding functionality of reset password *********************** -->
+
+<!-- So here we are sending email when user is reset password for that we are using nodemailer-->
+
 
 
