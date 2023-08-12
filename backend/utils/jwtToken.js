@@ -17,15 +17,11 @@ const sendToken = (user, statusCode, res) => {
     httpOnly: true,
   };
   // sending or saving token in cookie
-  try{
     res.status(statusCode).cookie("token", token, options).json({
       success: true,
       token,
       user,
     });
-  }catch(err){
-    console.log(err);
-  }
 };
 
 module.exports = sendToken;

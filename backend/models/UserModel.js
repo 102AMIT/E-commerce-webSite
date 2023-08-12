@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto"); // for generating token
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -44,6 +45,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // bcrypt password before saving user
+// pre is a middleware that runs before the document is saved
 userSchema.pre("save", async function (next) {
   // we only want to hash the password if it has been modified suppose you update the user but don't want to change the password(use case is update the profile picture)
   if (!this.isModified("password")) {
@@ -63,6 +65,23 @@ userSchema.methods.getJwtToken = function () {
 // this refer to the current document which is the user document in this case and we are comparing the password entered by the user with the password in the database
 userSchema.methods.comparePassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
+};
+
+userSchema.methods.getResetPasswordToken = function () {
+    // generate token
+    const resetToken = crypto.randomBytes(20).toString("hex");
+
+    // hash and set to resetPasswordToken to the userSchema
+    this.resetPasswordToken = crypto
+    // sha256 is the algorithm used to hash the token
+        .createHash("sha256")
+        .update(resetToken) 
+        .digest("hex");
+
+    // set token expire time
+    this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+
+    return resetToken;
 };
 
 module.exports = mongoose.model("User", userSchema);
