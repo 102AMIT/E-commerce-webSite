@@ -27,5 +27,9 @@
 
 <!-- So here we are sending email when user is reset password for that we are using nodemailer-->
 
+<!-- Creating order model and adding functionality for order and here some routes are also manage or track by admin **********************************-->
+
+<!-- Creating order part is challenging because is associated with the product like product stock and all so handling all those edge cases and successfully implementing the order functionality of product  -->
+
 
 
