@@ -57,31 +57,31 @@ userSchema.pre("save", async function (next) {
 
 // JWT TOKEN
 userSchema.methods.getJwtToken = function () {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_TIME,
-    });
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_TIME,
+  });
 };
 // compare user password
 // this refer to the current document which is the user document in this case and we are comparing the password entered by the user with the password in the database
 userSchema.methods.comparePassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
 userSchema.methods.getResetPasswordToken = function () {
-    // generate token
-    const resetToken = crypto.randomBytes(20).toString("hex");
+  // generate token
+  const resetToken = crypto.randomBytes(20).toString("hex");
 
-    // hash and set to resetPasswordToken to the userSchema
-    this.resetPasswordToken = crypto
+  // hash and set to resetPasswordToken to the userSchema
+  this.resetPasswordToken = crypto
     // sha256 is the algorithm used to hash the token
-        .createHash("sha256")
-        .update(resetToken) 
-        .digest("hex");
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
 
-    // set token expire time
-    this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+  // set token expire time
+  this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
 
-    return resetToken;
+  return resetToken;
 };
 
 module.exports = mongoose.model("User", userSchema);

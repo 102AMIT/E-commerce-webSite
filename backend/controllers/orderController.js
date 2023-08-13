@@ -24,10 +24,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     if (orderItem.quantity > product.stock) {
       if (product.stock === 0) {
         return next(
-          new ErrorHandler(
-            `Product ${product.name} is out of stock now`,
-            400
-          )
+          new ErrorHandler(`Product ${product.name} is out of stock now`, 400)
         );
       } else {
         return next(

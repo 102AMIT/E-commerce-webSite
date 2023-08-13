@@ -23,9 +23,18 @@ router.get(
   getAllOrders
 );
 
-router.put('/admin/order/:id', isAuthenticatedUser, authorizeRoles('admin'), updateOrderStatus)
+router.put(
+  "/admin/order/:id",
+  isAuthenticatedUser,
+  authorizeRoles("admin"),
+  updateOrderStatus
+);
 
-router.delete('/admin/order/:id', isAuthenticatedUser, authorizeRoles('admin'), deleteOrder)
-
+router.delete(
+  "/admin/order/:id",
+  isAuthenticatedUser,
+  authorizeRoles("admin"),
+  deleteOrder
+);
 
 module.exports = router;

@@ -211,7 +211,6 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // get all users => /api/v1/admin/users
 
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
@@ -243,7 +242,6 @@ exports.getUserDetailsByAdmin = catchAsyncErrors(async (req, res, next) => {
 // update user profile => /api/v1/admin/user/:id
 
 exports.updateUserRoleByAdmin = catchAsyncErrors(async (req, res, next) => {
-
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
@@ -284,8 +282,3 @@ exports.deleteUserByAdmin = catchAsyncErrors(async (req, res, next) => {
     message: "User deleted successfully By Admin",
   });
 });
-
-
-
-
-
