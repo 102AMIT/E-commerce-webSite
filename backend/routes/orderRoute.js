@@ -6,7 +6,7 @@ const {
   getSingleOrder,
   myOrders,
   getAllOrders,
-  updateOrder,
+  updateOrderStatus,
   deleteOrder,
 } = require("../controllers/orderController");
 
@@ -23,7 +23,7 @@ router.get(
   getAllOrders
 );
 
-router.put('/admin/order/:id', isAuthenticatedUser, authorizeRoles('admin'), updateOrder)
+router.put('/admin/order/:id', isAuthenticatedUser, authorizeRoles('admin'), updateOrderStatus)
 
 router.delete('/admin/order/:id', isAuthenticatedUser, authorizeRoles('admin'), deleteOrder)
 

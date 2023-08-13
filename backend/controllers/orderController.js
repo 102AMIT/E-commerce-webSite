@@ -16,6 +16,30 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paymentInfo,
   } = req.body;
 
+  // check oderItems array is contain quantity more than available quantity in product stock or not
+  for (const orderItem of orderItems) {
+    console.log(orderItem);
+    const product = await Product.findById(orderItem.product);
+
+    if (orderItem.quantity > product.stock) {
+      if (product.stock === 0) {
+        return next(
+          new ErrorHandler(
+            `Product ${product.name} is out of stock now`,
+            400
+          )
+        );
+      } else {
+        return next(
+          new ErrorHandler(
+            `Product ${product.name} is ${product.stock} left`,
+            400
+          )
+        );
+      }
+    }
+  }
+
   const order = await Order.create({
     orderItems,
     shippingInfo,
@@ -85,8 +109,16 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
 
 // update order status / process order - ADMIN
 
-exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
+exports.updateOrderStatus = catchAsyncErrors(async (req, res, next) => {
+  // req.params.id is the id of the order that we want to update
+
   const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return next(new ErrorHandler("No order found with this ID", 404));
+  }
+
+  // req.body.status is the status that we want to update to
 
   if (order.orderStatus === "Delivered") {
     return next(new ErrorHandler("You have already delivered this order", 400));
@@ -109,6 +141,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+    message: "Order status updated",
   });
 });
 
@@ -127,16 +160,13 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
   if (!order) {
-    // return next(new ErrorHandler("No order found with this ID", 404));
-    return res.status(404).json({
-      success: false,
-      message: "No order found with this ID",
-    });
+    return next(new ErrorHandler("No order found with this ID", 404));
   }
 
   await order.deleteOne();
 
   res.status(200).json({
     success: true,
+    message: "Order deleted successfully",
   });
 });
