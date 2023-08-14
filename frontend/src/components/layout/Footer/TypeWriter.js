@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const TypewriterFooter = () => {
-  const text = "Created by Amit with ❤️ India";
+  const text = "Created by Amit with ❤️ India !!!";
   const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -19,7 +19,7 @@ const TypewriterFooter = () => {
   }, [currentIndex]);
 
   return (
-      <h3 style={{height:"30px"}}>{displayText}</h3>
+      <h3 style={{height:"50px"}}>{displayText}</h3>
   );
 };
 
