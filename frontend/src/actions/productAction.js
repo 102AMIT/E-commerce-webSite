@@ -10,8 +10,7 @@ import {
 export const getProducts = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_PRODUCT_REQUEST });
-    const { data } = await axios.get("/api/v1/products");
-    console.log(data);
+    const { data } = await axios.get("http://localhost:8000/api/v1/products");
     dispatch({
       type: ALL_PRODUCT_SUCCESS,
       payload: data,

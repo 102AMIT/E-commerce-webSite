@@ -21,7 +21,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   // for pagination
-  const resultPerPage = 5;
+  const resultPerPage = 8;
 
   const productCount = await Product.countDocuments();
 
@@ -31,10 +31,10 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
     .filter()
     .pagination(resultPerPage);
   // here we are using lean() method to get the product in json format and it's faster than normal find operation
-  const product = await apiFeature.query;
+  const products = await apiFeature.query;
   res.status(200).json({
     success: true,
-    product,
+    products,
     productCount,
   });
 });

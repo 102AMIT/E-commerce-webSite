@@ -10,7 +10,11 @@ export const productReducer = (state = { products: [] }, action) => {
     case ALL_PRODUCT_REQUEST:
       return { loading: true, products: [] };
     case ALL_PRODUCT_SUCCESS:
-      return { loading: false, products: action.payload.products };
+      return {
+        loading: false,
+        products: action.payload.products,
+        productsCount: action.payload.productsCount,
+      };
     case ALL_PRODUCT_FAIL:
       return {
         loading: false,
@@ -19,10 +23,9 @@ export const productReducer = (state = { products: [] }, action) => {
         // resPerPage: action.payload.resPerPage,
         // filteredProductsCount: action.payload.filteredProductsCount,
       };
-      case CLEAR_ERRORS:
+    case CLEAR_ERRORS:
       return { ...state, error: null };
     default:
       return state;
   }
 };
-// here we are combining all the reducers into one reducer
